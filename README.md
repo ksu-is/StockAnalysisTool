@@ -44,7 +44,7 @@ https://github.com/venky14/Stock-Market-Analysis-and-Prediction
 3. Set your key as "set GROQ_API_KEY=gsk_YOUR-KEY-HERE" through a windows command prompt (it won't be permanent unless if you add it via System Environment Variables in the system settings)
 4. python stock_analyzer.py
    
-## Useage
+## Usage
   * Can use a single ticker such as: python stock_analyzer.py AAPL
   * Can use multiple stock tickers such as: python stock_analyzer.py AAPL MSFT TSLA INTC
     
