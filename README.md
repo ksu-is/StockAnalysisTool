@@ -40,10 +40,14 @@ https://github.com/venky14/Stock-Market-Analysis-and-Prediction
 
 ## Setup
 1. pip install -r requirements.txt
-2. Get an API key from console.anthropic.com
-3. export ANTHROPIC_API_KEY="your-key-here"
+2. Get an API key from console.groq.com (using a free plan)
+3. Set your key as "set GROQ_API_KEY=gsk_YOUR-KEY-HERE" through a windows command prompt (it won't be permanent unless if you add it via System Environment Variables in the system settings)
 4. python stock_analyzer.py
-
+   
+## Useage
+  * Can use a single ticker such as: python stock_analyzer.py AAPL
+  * Can use multiple stock tickers such as: python stock_analyzer.py AAPL MSFT TSLA INTC
+    
 ## Disclaimer
 
 This tool is based on historical data taken from Yahoo Finance. You should always conduct your own research or consult a financial professional before investing.
