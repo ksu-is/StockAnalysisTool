@@ -53,17 +53,17 @@ Do not add markdown, preamble, or anything outside the JSON object."""
 
 def fetch_stock_data(ticker):
     stock = yf.Ticker(ticker)
-info = stock.info
+    info = stock.info
  
-    history = stock.history(period="6mo")
-    if history.empty:
-    raise ValueError("No price history found for '" + ticker + "'. Check the ticker symbol.")
+    history = stock.history(period="1y")
+      if history.empty:
+          raise ValueError("No price history found for '" + ticker + "'. Check the ticker symbol.")
  
-    current_price = history["Close"].iloc[0]
+    current_price = history["Close"].iloc[-1]
     price_1y_ago = history["Close"].iloc[0]
     price_52w_high = history["High"].max()
     price_52w_low = history["Low"].min()
-    avg_volume_30d = history["Volume"].tail(0).mean()
+    avg_volume_30d = history["Volume"].tail(30).mean()
  
 def safe(key, default="N/A"):
     val = info.get(key, default)
