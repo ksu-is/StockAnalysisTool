@@ -1,0 +1,28 @@
+# StockAnalysisTool Roadmap
+## Task List
+
+- [X] Create a StockAnalysisTool repository in the ksu-is GitHub organization-
+
+- [X] Create StockAnalysisTool repository in the ksu-is GitHub organization  
+
+- [X] Add README.md with project overview, setup and features
+
+- [X] Add ROADMAP.md with sprint tasks and assignments
+
+- [X] Find a related GitHub repository and evaluate it for useful ideas
+
+- [X] Clone and test at least one related expense tracker repository
+
+- [ ] Set up initial Python project files
+
+- [X] Research APIs to help gather data
+
+- [X] Find a free API for anyone to use
+
+- [X] Find a way to make the API permanent
+
+- [ ] Create a basic prototype that can accept a single ticker
+
+- [X] Update README.md with clearer setup and usage instructions
+
+- [X] Create a basic prototype that can accept multiple tickers
