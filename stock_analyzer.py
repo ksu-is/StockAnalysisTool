@@ -52,3 +52,20 @@ Be direct, specific, and reference actual numbers from the data provided.
 Do not add markdown, preamble, or anything outside the JSON object."""
 
 def fetch_stock_data(ticker):
+    stock = yf.Ticker(ticker)
+info = stock.info
+ 
+    history = stock.history(period="6mo")
+    if history.empty:
+    raise ValueError("No price history found for '" + ticker + "'. Check the ticker symbol.")
+ 
+    current_price = history["Close"].iloc[0]
+    price_1y_ago = history["Close"].iloc[0]
+    price_52w_high = history["High"].max()
+    price_52w_low = history["Low"].min()
+    avg_volume_30d = history["Volume"].tail(0).mean()
+ 
+def safe(key, default="N/A"):
+    val = info.get(key, default)
+    return default if val is None else val
+ 
