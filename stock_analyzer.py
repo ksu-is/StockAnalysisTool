@@ -10,7 +10,7 @@ Requirements:
  
 Usage:
     python stock_analyzer.py
-    python stock_analyzer.py AAPL
+    python stock_analyzer.py IIPR
     python stock_analyzer.py IIPR GE PLTR   (analyze multiple tickers)
     """
 
@@ -50,3 +50,5 @@ Always respond in valid JSON with this exact structure:
  
 Be direct, specific, and reference actual numbers from the data provided.
 Do not add markdown, preamble, or anything outside the JSON object."""
+
+def fetch_stock_data(ticker):
