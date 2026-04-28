@@ -56,8 +56,8 @@ def fetch_stock_data(ticker):
     info = stock.info
  
     history = stock.history(period="1y")
-      if history.empty:
-          raise ValueError("No price history found for '" + ticker + "'. Check the ticker symbol.")
+    if history.empty:
+        raise ValueError("No price history found for '" + ticker + "'. Check the ticker symbol.")
  
     current_price = history["Close"].iloc[-1]
     price_1y_ago = history["Close"].iloc[0]
@@ -65,7 +65,7 @@ def fetch_stock_data(ticker):
     price_52w_low = history["Low"].min()
     avg_volume_30d = history["Volume"].tail(30).mean()
  
-def safe(key, default="N/A"):
-    val = info.get(key, default)
-    return default if val is None else val
+    def safe(key, default="N/A"):
+        val = info.get(key, default)
+        return default if val is None else val
  
