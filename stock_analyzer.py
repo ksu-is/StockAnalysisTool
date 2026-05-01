@@ -163,3 +163,43 @@ def c(text, color):
     if code is None:
         return str(text) + COLORS["reset"]
     return code + str(text)
+
+
+def fmt_number(val):
+    if val == "N/A" or val is None:
+        return "N/A"
+    try:
+        n = float(val)
+        if abs(n) >= 1_000_000_000:
+            return "$" + str(round(n / 1_000_000_000, 2)) + "B"
+        if abs(n) >= 1_000_000:
+            return "$" + str(round(n / 1_000_000, 2)) + "M"
+        return str(round(n, 2))
+    except (ValueError, TypeError):
+        return str(val)
+ 
+ 
+def fmt_pct(val):
+    if val == "N/A" or val is None:
+        return "N/A"
+    try:
+        return str(round(float(val) * 100, 1)) + "%"
+    except (ValueError, TypeError):
+        return str(val)
+ 
+ 
+def print_report(stock_data, analysis):
+    ticker = stock_data["ticker"]
+    name = stock_data["company_name"]
+    verdict = analysis["verdict"]
+    vcol = VERDICT_COLOR.get(verdict, "white")
+    icon = VERDICT_ICON.get(verdict, "•")
+    width = 60
+    line = "-" * width
+ 
+    print()
+    print(c("=" * width, "cyan"))
+    print(c("  " + ticker + "  -  " + name, "bold"))
+    print(c("  " + str(stock_data["sector"]) + " · " + str(stock_data["industry"]), "gray"))
+    print(c("=" * width, "cyan"))
+    print()
