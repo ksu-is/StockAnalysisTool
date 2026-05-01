@@ -110,3 +110,44 @@ return {
         "payout_ratio": safe("payoutRatio"),
         "avg_volume_30d": round(avg_volume_30d),
     }
+
+
+def analyze_with_groq(stock_data):
+    api_key = os.environ.get(GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY evironment variable not set. Please set it and try again.")
+
+    client = Groq(api_key=api_key)
+
+    user_message = "Please analize the following stock data and give me your investment recommendation:\n\n" + json.dumps(stock_data, indent=2, default=str)
+
+    response = client.chat.completations.create(
+        model=GROQ_MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_message},
+        ],
+        temperature=0.3,
+        max_tokens=1024,
+    )
+ 
+    raw = response.choices[0].message.content.strip()
+ 
+    if raw.startswith("```"):
+        raw = raw.split("```")[1]
+        if raw.startswith("json"):
+            raw = raw[4:]
+ 
+    return json.loads(raw)
+ 
+ 
+COLORS = {
+    "reset": "\033[0m",
+    "bold": "\033[1m",
+    "green": "\033[92m",
+    "yellow": "\033[93m",
+    "red": "\033[91m",
+    "cyan": "\033[96m",
+    "gray": "\033[90m",
+    "white": "\033[97m",
+}
