@@ -151,3 +151,15 @@ COLORS = {
     "gray": "\033[90m",
     "white": "\033[97m",
 }
+
+VERDICT_COLOR = {"BUY": "green", "HOLD": "yellow", "SELL": "red"}
+RISK_COLOR = {"LOW": "green", "MEDIUM": "yellow", "HIGH": "red"}
+VERDICT_ICON = {"BUY": "▲", "SELL": "▼"}
+
+
+def c(text, color):
+    code = COLORS.get(color)
+
+    if code is None:
+        return str(text) + COLORS["reset"]
+    return code + str(text)
