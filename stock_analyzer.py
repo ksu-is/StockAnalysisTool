@@ -203,3 +203,28 @@ def print_report(stock_data, analysis):
     print(c("  " + str(stock_data["sector"]) + " · " + str(stock_data["industry"]), "gray"))
     print(c("=" * width, "cyan"))
     print()
+
+    banner = "  " + icon + "  " + verdict + "  " + icon + "  "
+    pad = (width - len(banner)) // 2
+    print(c(" " * pad + banner, vcol))
+    print(c("  " + analysis["summary"], "white"))
+    print()
+ 
+    print(c(line, "gray"))
+    print(c("  KEY METRICS", "gray"))
+    print(c(line, "gray"))
+ 
+    metrics = [
+        ("Price", "$" + str(stock_data["current_price"])),
+        ("52W High/Low", "$" + str(stock_data["52w_high"]) + " / $" + str(stock_data["52w_low"])),
+        ("1Y Return", str(stock_data["price_1y_change"]) + "%"),
+        ("Market Cap", fmt_number(stock_data["market_cap"])),
+        ("P/E (TTM)", fmt_number(stock_data["pe_ratio"])),
+        ("Forward P/E", fmt_number(stock_data["forward_pe"])),
+        ("Revenue Growth", fmt_pct(stock_data["revenue_growth"])),
+        ("Profit Margin", fmt_pct(stock_data["profit_margins"])),
+        ("Debt/Equity", fmt_number(stock_data["debt_to_equity"])),
+        ("Free Cash Flow", fmt_number(stock_data["free_cashflow"])),
+        ("Dividend Yield", fmt_pct(stock_data["dividend_yield"])),
+        ("Beta", fmt_number(stock_data["beta"])),
+        ("Analyst Target", "$" + str(stock_data["analyst_target_price"])),
