@@ -247,3 +247,91 @@ def print_report(stock_data, analysis):
     print(c(line, "gray"))
     print(c("  REASONS", "gray"))
     print(c(line, "gray"))
+
+    risk_col = RISK_COLOR.get(analysis.get("risk_level", "MEDIUM"), "yellow")
+    print("  " + c("Risk Level:", "gray") + " " * 14 + c(analysis.get("risk_level", "N/A"), risk_col))
+    print("  " + c("Time Horizon:", "gray") + " " * 13 + c(analysis.get("time_horizon", "N/A"), "cyan"))
+ 
+    print()
+    print(c(line, "gray"))
+    print(c("  REASONS", "gray"))
+    print(c(line, "gray"))
+ 
+    for i, reason in enumerate(analysis.get("reasons", []), 1):
+        words = reason.split()
+        lines = []
+        current_line = "  " + str(i) + ". "
+        indent = "     "
+        for word in words:
+            if len(current_line) + len(word) + 1 > width:
+                lines.append(current_line)
+                current_line = indent + word + " "
+            else:
+                current_line += word + " "
+        lines.append(current_line)
+        for l in lines:
+            print(c(l, "white"))
+        print()
+ 
+    if analysis.get("key_risks"):
+        print(c(line, "gray"))
+        print(c("  KEY RISK", "gray"))
+        print(c(line, "gray"))
+        risk_text = analysis["key_risks"]
+        words = risk_text.split()
+        current_line = "  "
+        for word in words:
+            if len(current_line) + len(word) + 1 > width:
+                print(c(current_line, "yellow"))
+                current_line = "  " + word + " "
+            else:
+                current_line += word + " "
+        print(c(current_line, "yellow"))
+ 
+    print()
+    print(c("=" * width, "cyan"))
+    print(c("  Disclaimer: This is AI-generated analysis, not financial advice.", "gray"))
+    print(c("=" * width, "cyan"))
+    print()
+ 
+ 
+def analyze_ticker(ticker):
+    ticker = ticker.upper().strip()
+    print(c("\n  Fetching data for " + ticker + "...", "gray"))
+ 
+    try:
+        stock_data = fetch_stock_data(ticker)
+    except Exception as e:
+        print(c("\n  ERROR fetching data: " + str(e), "red"))
+        return
+ 
+    print(c("  Running AI analysis...\n", "gray"))
+ 
+    try:
+        analysis = analyze_with_groq(stock_data)
+    except json.JSONDecodeError as e:
+        print(c("\n  ERROR parsing AI response: " + str(e), "red"))
+        return
+    except Exception as e:
+        print(c("\n  ERROR calling Groq API: " + str(e), "red"))
+        return
+ 
+    print_report(stock_data, analysis)
+ 
+ 
+def main():
+    if len(sys.argv) > 1:
+        tickers = sys.argv[1:]
+    else:
+        raw = input(c("\n  Enter ticker symbol(s) separated by spaces: ", "cyan")).strip()
+        if not raw:
+            print(c("  No ticker entered. Exiting.", "red"))
+            sys.exit(1)
+        tickers = raw.upper().split()
+ 
+    for ticker in tickers:
+        analyze_ticker(ticker)
+ 
+ 
+if __name__ == "__main__":
+    main()
