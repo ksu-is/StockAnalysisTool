@@ -18,7 +18,7 @@ import sys
 import json
 import os
 from groq import Groq
-Import yfinance as yf
+import yfinance as yf
 
 GROQ_MODEL = "llama3-70b-8192"
 
@@ -69,7 +69,7 @@ def fetch_stock_data(ticker):
         val = info.get(key, default)
         return default if val is None else val
  
-return {
+    return {
         "ticker": ticker.upper(),
         "company_name": safe("longName", ticker.upper()),
         "sector": safe("sector"),
@@ -113,15 +113,15 @@ return {
 
 
 def analyze_with_groq(stock_data):
-    api_key = os.environ.get(GROQ_API_KEY")
+    api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        raise ValueError("GROQ_API_KEY evironment variable not set. Please set it and try again.")
+        raise ValueError("GROQ_API_KEY environment variable not set. Please set it and try again.")
 
     client = Groq(api_key=api_key)
 
-    user_message = "Please analize the following stock data and give me your investment recommendation:\n\n" + json.dumps(stock_data, indent=2, default=str)
+    user_message = "Please analyze the following stock data and give me your investment recommendation:\n\n" + json.dumps(stock_data, indent=2, default=str)
 
-    response = client.chat.completations.create(
+    response = client.chat.completions.create(
         model=GROQ_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -154,15 +154,16 @@ COLORS = {
 
 VERDICT_COLOR = {"BUY": "green", "HOLD": "yellow", "SELL": "red"}
 RISK_COLOR = {"LOW": "green", "MEDIUM": "yellow", "HIGH": "red"}
-VERDICT_ICON = {"BUY": "▲", "SELL": "▼"}
+VERDICT_ICON = {"BUY": "▲", "HOLD": "■", "SELL": "▼"}
 
 
 def c(text, color):
     code = COLORS.get(color)
 
-    if code is None:
-        return str(text) + COLORS["reset"]
-    return code + str(text)
+if code is None:
+    return str(text)
+return code + str(text) + COLORS["reset"]
+    
 
 
 def fmt_number(val):
@@ -228,7 +229,7 @@ def print_report(stock_data, analysis):
         ("Dividend Yield", fmt_pct(stock_data["dividend_yield"])),
         ("Beta", fmt_number(stock_data["beta"])),
         ("Analyst Target", "$" + str(stock_data["analyst_target_price"])),
-        ("Analyst Recommendation", str(stock_data["analyst_recommendation"]).upper()),
+        ("Analyst Rating", str(stock_data["analyst_recommendation"]).upper()),
     ]
  
     for label, value in metrics:
@@ -239,15 +240,6 @@ def print_report(stock_data, analysis):
     print(c("  ANALYSIS", "gray"))
     print(c(line, "gray"))
  
-    risk_col = RISK_COLOR.get(analysis.get("risk_level", "MEDIUM"), "yellow")
-    print("  " + c("Risk Level:", "gray") + " " * 14 + c(analysis.get("risk_level", "N/A"), risk_col))
-    print("  " + c("Time Horizon:", "gray") + " " * 13 + c(analysis.get("time_horizon", "N/A"), "cyan"))
- 
-    print()
-    print(c(line, "gray"))
-    print(c("  REASONS", "gray"))
-    print(c(line, "gray"))
-
     risk_col = RISK_COLOR.get(analysis.get("risk_level", "MEDIUM"), "yellow")
     print("  " + c("Risk Level:", "gray") + " " * 14 + c(analysis.get("risk_level", "N/A"), risk_col))
     print("  " + c("Time Horizon:", "gray") + " " * 13 + c(analysis.get("time_horizon", "N/A"), "cyan"))
