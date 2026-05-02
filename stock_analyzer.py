@@ -158,13 +158,7 @@ VERDICT_ICON = {"BUY": "▲", "HOLD": "■", "SELL": "▼"}
 
 
 def c(text, color):
-    code = COLORS.get(color)
-
-if code is None:
-    return str(text)
-return code + str(text) + COLORS["reset"]
-    
-
+    return COLORS.get(color, "") + str(text) + COLORS["reset"]
 
 def fmt_number(val):
     if val == "N/A" or val is None:
