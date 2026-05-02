@@ -228,3 +228,22 @@ def print_report(stock_data, analysis):
         ("Dividend Yield", fmt_pct(stock_data["dividend_yield"])),
         ("Beta", fmt_number(stock_data["beta"])),
         ("Analyst Target", "$" + str(stock_data["analyst_target_price"])),
+        ("Analyst Recommendation", str(stock_data["analyst_recommendation"]).upper()),
+    ]
+ 
+    for label, value in metrics:
+        print("  " + c(label + ":", "gray") + " " * (22 - len(label)) + c(value, "white"))
+ 
+    print()
+    print(c(line, "gray"))
+    print(c("  ANALYSIS", "gray"))
+    print(c(line, "gray"))
+ 
+    risk_col = RISK_COLOR.get(analysis.get("risk_level", "MEDIUM"), "yellow")
+    print("  " + c("Risk Level:", "gray") + " " * 14 + c(analysis.get("risk_level", "N/A"), risk_col))
+    print("  " + c("Time Horizon:", "gray") + " " * 13 + c(analysis.get("time_horizon", "N/A"), "cyan"))
+ 
+    print()
+    print(c(line, "gray"))
+    print(c("  REASONS", "gray"))
+    print(c(line, "gray"))
