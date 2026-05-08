@@ -304,19 +304,35 @@ def analyze_ticker(ticker):
  
     print_report(stock_data, analysis)
  
- 
 def main():
+    # If tickers passed as arguments, analyze them and exit
     if len(sys.argv) > 1:
-        tickers = sys.argv[1:]
-    else:
-        raw = input(c("\n  Enter ticker symbol(s) separated by spaces: ", "cyan")).strip()
-        if not raw:
-            print(c("  No ticker entered. Exiting.", "red"))
-            sys.exit(1)
-        tickers = raw.upper().split()
+        for ticker in sys.argv[1:]:
+            analyze_ticker(ticker)
+        return
  
-    for ticker in tickers:
-        analyze_ticker(ticker)
+    # Otherwise run in interactive loop
+    print(c("\n  Stock Analysis Tool", "cyan"))
+    print(c("  Type a ticker to analyze, or exit to quit.", "gray"))
+ 
+    while True:
+        try:
+            raw = input(c("\n  Enter ticker symbol(s): ", "cyan")).strip()
+        except KeyboardInterrupt:
+            print(c("\n\n  Goodbye!\n", "gray"))
+            break
+ 
+        if not raw:
+            print(c("  Please enter a ticker symbol.", "yellow"))
+            continue
+ 
+        if raw.lower() in ("exit", "quit", "q"):
+            print(c("\n  Goodbye!\n", "gray"))
+            break
+ 
+        tickers = raw.upper().split()
+        for ticker in tickers:
+            analyze_ticker(ticker)
  
  
 if __name__ == "__main__":
