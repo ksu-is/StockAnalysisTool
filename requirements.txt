@@ -1,2 +1,2 @@
-Groq
+groq
 yfinance
