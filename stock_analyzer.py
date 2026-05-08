@@ -20,7 +20,7 @@ import os
 from groq import Groq
 import yfinance as yf
 
-GROQ_MODEL = "llama3-70b-8192"
+GROQ_MODEL = "llama-3.3-70b-versatile"
 
 #This will be the prompt for the AI to use
 SYSTEM_PROMPT = """You are a senior equity research analyst with 20+ years of experience on Wall Street. You analyze stocks rigorously and give clear, actionable investment recommendations based on fundamental and technical data.
