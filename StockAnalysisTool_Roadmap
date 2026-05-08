@@ -13,7 +13,7 @@
 
 - [X] Clone and test at least one related expense tracker repository
 
-- [ ] Set up initial Python project files
+- [X] Set up initial Python project files
 
 - [X] Research APIs to help gather data
 
@@ -21,7 +21,7 @@
 
 - [X] Find a way to make the API permanent
 
-- [ ] Create a basic prototype that can accept a single ticker
+- [X] Create a basic prototype that can accept a single ticker
 
 - [X] Update README.md with clearer setup and usage instructions
 
